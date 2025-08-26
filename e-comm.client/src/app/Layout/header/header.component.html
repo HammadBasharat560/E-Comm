@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="left-section">
+    <button mat-icon-button (click)="onToggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="app-title">{{appName}}</h1>
+  </div>
+  
+  <div class="right-section">
+    <button mat-icon-button [matMenuTriggerFor]="notificationsMenu">
+      <mat-icon [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+    
+    <mat-menu #notificationsMenu="matMenu">
+      <button mat-menu-item *ngFor="let notification of notifications">
+        <mat-icon>{{notification.icon}}</mat-icon>
+        <span>{{notification.message}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="markAllAsRead()">
+        <mat-icon>done_all</mat-icon>
+        <span>Mark all as read</span>
+      </button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+      <div class="profile-info">
+
+      </div>
+      <mat-icon class="profile-icon">account_circle</mat-icon>
+    </button>
+    
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="editProfile()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit Profile</span>
+      </button>
+      <button mat-menu-item (click)="changePassword()">
+        <mat-icon>lock</mat-icon>
+        <span>Change Password</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

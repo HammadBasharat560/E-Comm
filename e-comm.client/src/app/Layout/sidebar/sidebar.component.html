@@ -1,0 +1,44 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  
+  <nav class="nav-menu">
+    <ul>
+      <ng-container *ngFor="let item of menuItem">
+        <li *ngIf="item.isTitle" class="menu-title">
+          {{item.label}}
+        </li>
+        
+        <li *ngIf="!item.isTitle" 
+            [class.expanded]="isExpanded(item)"
+            [class.has-children]="item.children && item.children.length > 0">
+          
+          <a (click)="toggleSubmenu(item)" [class.clickable]="true">
+            <mat-icon>{{item.icon}}</mat-icon>
+            <span *ngIf="!isCollapsed">{{item.label}}</span>
+            <mat-icon *ngIf="item.children && !isCollapsed" class="chevron">
+              {{isExpanded(item) ? 'expand_less' : 'expand_more'}}
+            </mat-icon>
+            <span *ngIf="item.count && !isCollapsed" class="menu-badge">5</span>
+          </a>
+          
+          <ul *ngIf="item.children && isExpanded(item) && !isCollapsed" class="submenu">
+            <li *ngFor="let child of item.children">
+              <a (click)="navigateToPage(child.link)" [class.clickable]="true">
+                <mat-icon>{{child.icon}}</mat-icon>
+                <span>{{child.label}}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+  
+  <div class="sidebar-footer">
+    <button mat-icon-button (click)="toggleCollapse()">
+      <mat-icon>{{isCollapsed ? 'chevron_right' : 'chevron_left'}}</mat-icon>
+    </button>
+  </div>
+</aside>
