@@ -9,4 +9,10 @@ namespace E_Comm.Server.ModelDto
         public UserRole eRole { get; set; }
         public string Token { get; set; }
     }
+
+    public class LoginErrorResponse()
+    {
+        public bool isSuccess { get; set; }
+        public string error { get; set; }
+    }
 }

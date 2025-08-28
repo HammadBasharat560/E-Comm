@@ -24,6 +24,7 @@ namespace E_Comm.Server.Services.AuthService
 
             public async Task<LoginResponseDto> Login(LoginRequestDto loginRequest)
             {
+                 var response = new LoginErrorResponse();
                 if (loginRequest == null)
                 {
                     throw new ArgumentNullException(nameof(loginRequest), "Login request cannot be null");
@@ -33,15 +34,28 @@ namespace E_Comm.Server.Services.AuthService
                 {
                     throw new UnauthorizedAccessException("Invalid email or password");
                 }
+
+                if(userDetail.IsApproved == false)
+                {
+                    response.isSuccess = false;
+                    response.error = "User is not active";
+                }
+
+                if (userDetail.IsEmailConfirmed == false)
+                {
+                    response.isSuccess = false;
+                    response.error = "please verify you email and active your status";
+                }
+
                 var token  = _jwtTokenHelper.GenerateToken(userDetail);
 
-            return new LoginResponseDto
-            {
-                UserId = userDetail.Id.ToString(),
-                Email = userDetail.Email,
-                eRole = userDetail.Role,
-                Token = token
-            };
+                return new LoginResponseDto
+                {
+                    UserId = userDetail.Id.ToString(),
+                    Email = userDetail.Email,
+                    eRole = userDetail.Role,
+                    Token = token
+                };
             }
 
         public async Task<bool> CheckEmailExist(string email)
