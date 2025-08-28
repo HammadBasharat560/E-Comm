@@ -5,3 +5,8 @@ export enum eRoleEnum {
   User = 4,
   // Add other roles as needed
 }
+
+export interface loginDto{
+  email : string | null;
+  password : string | null;
+}

@@ -22,7 +22,7 @@ export function getMenuItems(): MenuItem[] {
         {
           label: 'All Products',
           icon: 'list',
-          link: '/products/list',
+          link: '/auth/login',
           show: true,
         },
         {
